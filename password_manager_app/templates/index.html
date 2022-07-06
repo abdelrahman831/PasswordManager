@@ -1,0 +1,630 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js "  data-deferred="1"></script>
+
+   
+    <title>Adding Boxes js</title>
+</head>
+
+<body>
+    <style>
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(0, 0, 0);
+
+    height: 100vh;
+}
+
+.container{
+    position: relative;
+    width: 60vw;
+    height: 35vW;
+    background: rgb(0, 0, 0);
+    display: inline-block;
+    justify-content: center;
+    align-items: flex-start;
+    border-radius: 10px;
+}
+
+.top_bar{
+    height: 4vw;
+    width: 100%;
+    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    border-bottom: 1px solid rgb(85, 81, 81);
+}
+
+.top_bar h1{
+    margin-left: 0px;
+    color: aliceblue;
+}
+.header{
+    width: 70%;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.add{
+    height: 75%;
+    width: 12%;
+    display: flex;
+    align-items: center;
+}
+.top_bar button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor:pointer;
+    border: none;
+    height: 100%;
+    width: 40%;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.top_bar button ion-icon{
+    color: rgb(0, 0, 0);
+    height: 33px;
+    width:33px;
+    font-size: xx-large;
+}
+.top_bar button:hover ion-icon{
+
+    color: rgb(255, 255, 255);
+}
+
+
+.top_bar button:hover{
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    cursor:pointer;
+}
+
+.down_bar{
+    display: inline-block;
+    margin-top: 10px;
+    width: 100%;
+    overflow-y: auto;
+    min-height: 80%;
+    max-height: 82%;
+}
+
+.content{
+    margin-left: 5px;
+    margin-top: 5px;
+    min-height:50px;
+    width: 95%;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 25px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    background-color: #fff;
+}
+
+.content h4{
+    margin: 5px;
+}
+.content:hover{
+    cursor:pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+
+.popup{
+    position: absolute;
+    display:inline-block;
+    justify-content: center;
+    height: 250px;
+    background-color: rgb(151, 33, 33);
+    padding: 20px;
+    border-radius: 20px;
+    z-index: 3;
+    color: rgb(0, 0, 0);
+    display: none;
+
+}
+
+.popup input{
+    margin-top: 20px;
+    height: 30px;
+}
+.popup button{
+    margin-top: 20px;
+    height: 30px;
+    background-color: rgb(17, 0, 249);
+    border:none;
+    width: 50px;
+    border-radius: 5px;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+}
+.popup button:hover{
+    background-color: rgb(42, 34, 161);
+    color: aliceblue;
+}
+
+.popupShow{
+    display: inline-block;
+}
+
+.down_bar button
+{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+}
+.down_bar button
+{
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: rgb(0, 88, 59);
+}
+
+.down_bar button:hover
+{
+    color: rgb(120, 1, 1);
+
+}
+
+#delete:hover{
+    color: red;
+}
+
+.content input{
+    border:none;
+    max-width: 200px;
+}
+.indicatore{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    width:60%;
+}
+.indicatore p{
+    border-bottom: 1px solid rgb(255, 255, 255);
+    color: aliceblue;
+}
+
+.icons{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+#plus{
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+#particles-js{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+    </style>
+
+
+
+    <div class="popup" id="elemento">
+
+        <form action="" method="post">
+            <h3>Inserire Nome Oggetto</h3>
+                {% csrf_token %}
+            <input name="siteName" type="text" id="nome_piattaforma" placeholder="Inserire Nome" required>
+            <span title="Nome Piattaforma"></span>
+            <br>
+            <input name="userName" type="text" id="username_piattaforma" placeholder="Inserire username" required>
+
+            <input name="password" type="password" id="password_piattaforma" placeholder="Inserire password" required>
+
+            <br>
+            <button id="add_button" onclick="count()" type="submit">Nuovo</button>
+        </form>
+
+
+    </div>
+    <div class="bgc" id="particles-js">
+
+    </div>
+
+    <div class="container">
+        <div class="top_bar">
+
+            <div class="header">
+                <h1>Benvenuto {{name}}</h1>
+            </div>
+
+            <div class="add">
+                <button onclick="new_popup()">
+                  <ion-icon name="add-outline"></ion-icon>
+                </button>
+
+            </div>
+
+        </div>
+        <div class="down_bar" id="down_bar" >
+
+              <div class="indicatore">
+                <p>Sito</p>
+                <p>Username</p>
+                <p>Password</p>
+            </div>
+            {% for i in sitenames%}
+
+                <p>-{{i}}</p>
+            {% endfor%}
+
+        </div>
+
+    </div>
+    <script>
+const add_btn = document.getElementById('add_button');
+
+var down_bar_container = document.getElementsByClassName("down_bar");
+var index = 0;
+
+var popupEl = document.getElementById("elemento").classList;
+/*
+var obj_name = document.querySelector('input').value;
+var obj_name = document.getElementById("nameObj").value;
+*/
+var counter = 0;
+
+function getVal() {
+    var val1 = document.getElementById("nome_piattaforma").value;
+    return val1
+}
+function getVal2() {
+    var val2 = document.getElementById("username_piattaforma").value;
+    return val2
+}
+function getVal3() {
+    var val3 = document.getElementById("password_piattaforma").value;
+    return val3
+}
+
+
+function new_popup(){
+    popupEl.add("popupShow")
+}
+var counta = 0;
+function count(){
+    counta++;
+}
+
+var conta = 0;
+var text = document.getElementsByClassName("inputEl");
+var buttonPassw = document.getElementsByClassName("lock");
+function changeIcon(lock){
+    if (text[lock.id].type === "password") {
+        lock.innerHTML = '<ion-icon name="lock-open-outline"></ion-icon>';
+        text[lock.id].type = "text";
+    } else {
+        lock.innerHTML = '<ion-icon name="lock-closed-outline"></ion-icon>';
+        text[lock.id].type = "password";
+    }
+}
+
+
+
+var contaBtn = 0;
+var h1,h2,p;
+var content,data,data2,hideShow,temp2,temp;
+
+function create_content(){
+    content = document.createElement('div');
+    content.className = `content`;
+    content.id = `content-${index}`;
+    document.getElementsByClassName('down_bar')[0].appendChild(content);
+
+    return content;
+}
+
+function create_titles(val1){
+    data = document.createElement('h4');
+    data.className = "hEl";
+    data.innerHTML = val1;
+    return data
+}
+
+function create_passwords(val1){
+    data2 = document.createElement('input');
+    data2.id = `${index}`;
+    data2.className = 'inputEl';
+    data2.readOnly = true;
+    data2.disabled = true;
+    data2.type = "password";
+    data2.value =val1;
+    return data2
+}
+
+function create_div(){
+    var temo
+    temo = document.createElement('div');
+    temo.className = `plus`;
+    temo.id = 'plus';
+    return temo
+}
+
+function create_hide_show(){
+    hideShow = document.createElement("button");
+    hideShow.id = `${index}`;
+    hideShow.onclick = function() {changeIcon(this)};
+    hideShow.innerHTML = '<ion-icon name="lock-closed-outline"></ion-icon>';
+
+    return hideShow
+}
+
+
+
+function create_full_box(){
+
+    temp = document.createElement('div');
+    temp.className = `content`;
+    temp.id = `content-${index}`;
+    document.getElementsByClassName('down_bar')[0].appendChild(temp);
+
+    temp2 = document.createElement('h4');
+    temp2.className = "h1El";
+    temp2.innerHTML = getVal();
+    document.getElementsByClassName('content')[index].appendChild(temp2);
+
+    temp2 = document.createElement('h4');
+    temp2.className = "h2El";
+    temp2.innerHTML = getVal2();
+    document.getElementsByClassName('content')[index].appendChild(temp2);
+
+
+
+    temp2 = document.createElement('input');
+    temp2.id = `${index}`;
+    temp2.className = 'inputEl';
+    temp2.readOnly = true;
+    temp2.disabled = true;
+    temp2.type = "password";
+    document.getElementsByClassName('content')[index].appendChild(temp2);
+
+    temp.innerHTML += '<div class="plus" id="plus"><div class="icons"></div></div>';
+    //<input id="inputEl" class="inputEl" type = "password" disabled></input>
+
+
+
+    var delButn;
+
+    delButn = document.createElement("button");
+    delButn.id = `${index}`;
+    delButn.onclick = function() {changeIcon(this)};
+    delButn.innerHTML = '<ion-icon name="lock-closed-outline"></ion-icon>';
+
+    document.getElementsByClassName('plus')[index].appendChild(delButn);
+
+
+
+    text[index].value =getVal3();
+
+    index++;
+    contaBtn++;
+    counter++;
+
+
+
+}
+
+var siteNames = [];
+
+var usernames = [];
+var passwords = [];
+
+
+var data = JSON.parse("{{data|escapejs}}");
+
+for(let i = 0; i<data['sitenames'].length; i++){
+
+    siteNames.push(data['sitenames'][i])
+}
+for(let i = 0; i<data['usernames'].length; i++){
+    usernames.push(data['usernames'][i])
+}
+for(let i = 0; i<data['passwords'].length; i++){
+    passwords.push(data['passwords'][i])
+}
+console.log(data['passwords'])
+var div = "";
+var hsbtn = "";
+var cpp = "";
+
+var box_completo = ["sitename","username","passwioer"];
+
+
+for(let i = 0; i<siteNames.length; i++){
+    content =  create_content();
+    data = create_titles(siteNames[i]);
+    document.getElementsByClassName('content')[index].appendChild(data);
+    data = create_titles(usernames[i]);
+    document.getElementsByClassName('content')[index].appendChild(data);
+    data = create_passwords(passwords[i]);
+    document.getElementsByClassName('content')[index].appendChild(data);
+    div = create_div();
+    document.getElementsByClassName('content')[index].appendChild(div);
+    hsbtn = create_hide_show();
+    document.getElementsByClassName('plus')[index].appendChild(hsbtn);
+
+
+    index++;
+}
+
+
+add_btn.addEventListener("click", function(){
+
+    if(getVal() === "" || getVal2() === "" || getVal3() === ""){
+        var def = document.createElement('p');
+        def.className = "required";
+
+
+        document.getElementsByClassName('popup')[0].appendChild(def);
+        var ciao = document.getElementsByClassName("required");
+        ciao[0].innerHTML = "<p>All Field Are Required</p>";
+        setTimeout(() => {  ciao[0].innerHTML = ""; }, 2000);
+    }
+    else{
+
+        /*
+        buttonPassw[i].id = `${i}`;
+        */
+
+        create_full_box()
+
+
+
+
+        popupEl.remove("popupShow")
+
+    }
+
+
+
+});
+
+
+
+
+
+
+    </script>
+
+    <script>
+        particlesJS("particles-js", {
+    "particles": {
+      "number": {
+        "value": 500,
+        "density": {
+          "enable": true,
+          "value_area": 1000
+        }
+      },
+      "color": {
+        "value": "#7CFC00"
+      },
+      "shape": {
+        "type": "triangle",
+        "stroke": {
+          "width": 0,
+          "color": "#7CFC00"
+        },
+        "polygon": {
+          "nb_sides": 20
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 1,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 3,
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#7CFC00",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 6,
+        "direction": "none",
+        "random": true,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": true,
+        "attract": {
+          "enable": false,
+          "rotateX": 600,
+          "rotateY": 1200
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "window",
+      "events": {
+        "onhover": {
+          "enable": true,
+          "mode": "grab",
+                  "color": "#355E3B"
+        },
+        "onclick": {
+          "enable": true,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 140,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 100,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 100,
+          "duration": 0.4
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true
+  });
+    </script>
+</body>
+
+</html>
