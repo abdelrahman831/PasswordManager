@@ -13,7 +13,7 @@ def get_random_string():
 
 urlpatterns = [
     path('', Index,name='home'),
-    path(f' {get_random_string()}', logged_in,name="personalArea"),
+    path('personalArea', logged_in,name="personalArea"),
     path('login', login,name='login'),
     path('register', register,name='register'),
     path('logout', logout,name='logout'),

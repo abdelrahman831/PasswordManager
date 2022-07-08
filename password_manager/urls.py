@@ -19,5 +19,5 @@ from password_manager_app.views import Index,logged_in
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/',include('password_manager_app.urls')),
+    path('/',include('password_manager_app.urls')),
 ]
