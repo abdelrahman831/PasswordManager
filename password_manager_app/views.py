@@ -50,7 +50,7 @@ def logged_in(request):
             username = request.POST['userName']
             password = request.POST['password']
 
-            set = Password_Manager(registered_user=us,siteName= sitename,userName=username,password=password)
+            set = Password_Manager(siteName= sitename,userName=username,password=password)
             set.save()
 
         except Error as e:
