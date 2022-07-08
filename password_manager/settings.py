@@ -91,13 +91,14 @@ WSGI_APPLICATION = 'password_manager.wsgi.application'
 DATABASES = {
     'default': {
     'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'passwordstore',
-    'USER': 'root',
-    'PASSWORD': '',
-    'HOST': 'localhost',
+    'NAME': 'sql11504914',
+    'USER': 'sql11504914',
+    'PASSWORD': 'yZHd9eItsh',
+    'HOST': 'sql11.freemysqlhosting.net',
     'PORT': '3306',
     }
 }
+
 
 
 # Password validation

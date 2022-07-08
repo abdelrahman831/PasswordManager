@@ -9,6 +9,7 @@ from json import dumps
 def Index(request):
     print(visitor_ip_address(request))
 
+
     return render(request,'./home.html',{"state":state})
 
 
@@ -35,15 +36,15 @@ def logged_in(request):
     passwords = []
     if request.method == "POST":
         try:
-            connection = mysql.connector.connect(host='localhost',
-                                             database='passwordstore',
-                                             user='root',
-                                             password='')
+            connection = mysql.connector.connect(host='sql11.freemysqlhosting.net',
+                                                 database='sql11504914',
+                                                 user='sql11504914',
+                                                 password='yZHd9eItsh')
 
             sql_select_Query = "select * from password_manager_app_password_manager"
-            cursor = connection.cursor()
+            cursor = connection.cursor(buffered=True)
             cursor.execute(sql_select_Query)
-            records = cursor.fetchall()
+
 
             sitename = request.POST['siteName']
             username = request.POST['userName']
@@ -65,13 +66,13 @@ def logged_in(request):
         return redirect(logged_in)
     else:
         try:
-            connection = mysql.connector.connect(host='localhost',
-                                                 database='passwordstore',
-                                                 user='root',
-                                                 password='')
+            connection = mysql.connector.connect(host='sql11.freemysqlhosting.net',
+                                                 database='sql11504914',
+                                                 user='sql11504914',
+                                                 password='yZHd9eItsh')
 
             sql_data = f"select * from password_manager_app_password_manager WHERE registered_user = '{us}'"
-            cursor = connection.cursor()
+            cursor = connection.cursor(buffered=True)
             cursor.execute(sql_data)
             records = cursor.fetchall()
 
@@ -101,26 +102,27 @@ def logged_in(request):
 
     return render(request,'index.html',dict)
 
-
 state = "off"
+
+
 def login(request):
-     global us,dict,state
-     if request.method == 'POST':
+    global us, dict, state
+    if request.method == 'POST':
         try:
-            connection = mysql.connector.connect(host='localhost',
-                                             database='passwordstore',
-                                             user='root',
-                                             password='')
+            connection = mysql.connector.connect(host='sql11.freemysqlhosting.net',
+                                                 database='sql11504914',
+                                                 user='sql11504914',
+                                                 password='yZHd9eItsh')
 
             sql_select_Query = "select * from password_manager_app_user_registration"
-            cursor = connection.cursor()
+
+            cursor = connection.cursor(buffered=True)
             cursor.execute(sql_select_Query)
             records = cursor.fetchall()
 
             username = request.POST['username']
             us = username
             password = request.POST['password']
-
 
             global list_of_usernames
             if len(records) != 0:
@@ -130,15 +132,15 @@ def login(request):
 
                         return redirect(Index)
                     if username == row[1] and password != row[2]:
-                        #dict = {'name':username,"problem":"password Errata"}
-                        messages.info(request,"Username and password don't matching")
+                        # dict = {'name':username,"problem":"password Errata"}
+                        messages.info(request, "Username and password don't matching")
                         state = "off"
 
                         return redirect(login)
 
 
         except Error as e:
-            print("Error while connecting to MySQL",e)
+            print("Error while connecting to MySQL", e)
 
         finally:
             if connection.is_connected():
@@ -147,23 +149,23 @@ def login(request):
                 print("MySQL connection is closed")
 
         state = "off"
-        return render(request,'login.html')
-     else:
+        return render(request, 'login.html')
+    else:
 
-        return render(request,'login.html')
+        return render(request, 'login.html')
 
 
 def register(request):
-    global us, dict,state
+    global us, dict, state
     if request.method == 'POST':
         try:
-            connection = mysql.connector.connect(host='localhost',
-                                             database='passwordstore',
-                                             user='root',
-                                             password='')
+            connection = mysql.connector.connect(host='sql11.freemysqlhosting.net',
+                                                 database='sql11504914',
+                                                 user='sql11504914',
+                                                 password='yZHd9eItsh')
 
             sql_select_Query = "select * from password_manager_app_user_registration"
-            cursor = connection.cursor()
+            cursor = connection.cursor(buffered=True)
             cursor.execute(sql_select_Query)
             records = cursor.fetchall()
 
@@ -184,13 +186,13 @@ def register(request):
                 dict.update({'name': username})
                 print('New User Created')
                 state = "on"
-                return redirect(logged_in)
+                return redirect(Index)
             else:
                 messages.info(request, "password don't match")
                 return redirect(register)
 
         except Error as e:
-            print("Error while connecting to MySQL",e)
+            print("Error while connecting to MySQL", e)
 
         finally:
             if connection.is_connected():
@@ -198,13 +200,10 @@ def register(request):
                 connection.close()
                 print("MySQL connection is closed")
 
-
-
         return render(request, 'registrati.html')
     else:
 
         return render(request, 'registrati.html')
-
 
 
 def logout(request):
