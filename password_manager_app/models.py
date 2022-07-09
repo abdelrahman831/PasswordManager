@@ -13,3 +13,7 @@ class Password_Manager(models.Model):
     userName = models.TextField(max_length=191)
     password = models.TextField(max_length=191)
 
+class login_form(models.Model):
+    username = models.TextField(max_length=20)
+    password = models.TextField(max_length=20)
+

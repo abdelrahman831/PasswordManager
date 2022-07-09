@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from password_manager_app.models import Password_Manager,User_Registration
+from password_manager_app.models import Password_Manager,User_Registration,login_form
 from django.contrib.auth.models import User, auth
 import mysql.connector
 from django.contrib import messages
@@ -26,7 +26,6 @@ list_of_usernames = []
 
 dict = {}
 
-
 def logged_in(request):
     global us,siteNames,passwords,usernames
 
@@ -50,7 +49,7 @@ def logged_in(request):
             username = request.POST['userName']
             password = request.POST['password']
 
-            set = Password_Manager(siteName= sitename,userName=username,password=password)
+            set = Password_Manager(registered_user=us,siteName= sitename,userName=username,password=password)
             set.save()
 
         except Error as e:
@@ -114,7 +113,7 @@ def login(request):
                                                  user='sql11504914',
                                                  password='yZHd9eItsh')
 
-            sql_select_Query = "select * from password_manager_app_user_registration"
+            sql_select_Query = "select * from login_form"
 
             cursor = connection.cursor(buffered=True)
             cursor.execute(sql_select_Query)
@@ -138,6 +137,7 @@ def login(request):
 
                         return redirect(login)
 
+            messages.info(request, "not a member? register now")
 
         except Error as e:
             print("Error while connecting to MySQL", e)
@@ -164,7 +164,9 @@ def register(request):
                                                  user='sql11504914',
                                                  password='yZHd9eItsh')
 
-            sql_select_Query = "select * from password_manager_app_user_registration"
+            sql_select_Query = "select * from login_form"
+
+
             cursor = connection.cursor(buffered=True)
             cursor.execute(sql_select_Query)
             records = cursor.fetchall()
@@ -173,7 +175,8 @@ def register(request):
             us = username
             password = request.POST['password']
             password2 = request.POST['password2']
-
+            sql_insert_Query = f"INSERT INTO login_form(username, password) VALUES('{username}', '{password}')"
+            insert_cursor = connection.cursor(buffered=True)
             global list_of_usernames
             if len(records) != 0:
                 for row in records:
@@ -181,10 +184,8 @@ def register(request):
                         messages.info(request, "Username already exist")
                         return redirect(register)
             if password2 == password:
-                set = User_Registration(username=username, password=password)
-                set.save()
-                dict.update({'name': username})
-                print('New User Created')
+                insert_cursor.execute(sql_insert_Query)
+                connection.commit()
                 state = "on"
                 return redirect(Index)
             else:
