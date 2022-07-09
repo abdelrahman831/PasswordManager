@@ -7,10 +7,11 @@ from json import dumps
 # Import ListView module
 
 def Index(request):
+    global us
     print(visitor_ip_address(request))
 
 
-    return render(request,'./home.html',{"state":state})
+    return render(request,'./home.html',{"state":state,"name":us})
 
 
 id_Logged_in =0
@@ -126,11 +127,11 @@ def login(request):
             global list_of_usernames
             if len(records) != 0:
                 for row in records:
-                    if username == row[1] and password == row[2]:
+                    if username == row[0] and password == row[1]:
                         state = "on"
 
                         return redirect(Index)
-                    if username == row[1] and password != row[2]:
+                    if username == row[0] and password != row[1]:
                         # dict = {'name':username,"problem":"password Errata"}
                         messages.info(request, "Username and password don't matching")
                         state = "off"
